@@ -84,9 +84,9 @@ namespace Host
 				if (pluginType.IsPublic)
 				{
 					if (!pluginType.IsAbstract)
-					{
+					{						
 						Type typeInterface = pluginType.GetInterface("PluginInterface.IPlugin", true);
-						if (typeInterface != null)
+						if (typeInterface != null || pluginType.ToString().EndsWith(".Plugin"))
 						{
 							Types.Plugin newPlugin = new Types.Plugin();
 							newPlugin.AssemblyPath = FileName;

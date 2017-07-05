@@ -26,6 +26,7 @@ namespace PluginInterface
 			catch
 			{
 				xmlDocument.LoadXml("<settings></settings>");
+				Console.WriteLine(String.Format("Failed to load xml {0} from path {1}", filename, path));
 				return false;
 			}
 		}

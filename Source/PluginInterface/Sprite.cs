@@ -100,6 +100,9 @@ namespace otitemeditor
                         UInt32 index = element + 3;
                         reader.BaseStream.Seek(index, SeekOrigin.Begin);
                         UInt16 size = reader.ReadUInt16();
+                        if (element == 0) {
+                        	size = 0;
+                        }
 
                         Sprite sprite;
                         if (sprites.TryGetValue(id, out sprite))

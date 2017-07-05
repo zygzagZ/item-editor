@@ -29,7 +29,7 @@ namespace Tibia850
 
 	public class Plugin : IPlugin
 	{
-		Dictionary<UInt16, Sprite> sprites = new Dictionary<UInt16, Sprite>();
+		Dictionary<UInt32, Sprite> sprites = new Dictionary<UInt32, Sprite>();
 		SpriteItems items = new SpriteItems();
 		List<SupportedClient> supportedClients = new List<SupportedClient>();
 		IPluginHost myHost = null;
@@ -75,6 +75,7 @@ namespace Tibia850
 					UInt32 datSignature = reader.ReadUInt32();
 					if (signature != 0 && datSignature != signature)
 					{
+						Console.WriteLine("dat Signature mismatch");
 						return false;
 					}
 
@@ -83,6 +84,8 @@ namespace Tibia850
 					UInt16 creatureCount = reader.ReadUInt16();
 					UInt16 effectCount = reader.ReadUInt16();
 					UInt16 distanceCount = reader.ReadUInt16();
+
+					Console.WriteLine("DAT: items: {0}, creatures: {1}, effects: {2}, distances: {3}", itemCount, creatureCount, effectCount, distanceCount);
 
 					UInt16 minclientID = 100; //items starts at 100
 					UInt16 maxclientID = itemCount;
@@ -312,7 +315,7 @@ namespace Tibia850
 						// Read the sprite ids
 						for (UInt32 i = 0; i < item.numSprites; ++i)
 						{
-							UInt16 spriteId = reader.ReadUInt16();
+							UInt32 spriteId = reader.ReadUInt32();
 							Sprite sprite;
 							if (!sprites.TryGetValue(spriteId, out sprite))
 							{

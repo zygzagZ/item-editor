@@ -530,7 +530,7 @@ namespace otitemeditor
 
 							if (outputDebug)
 							{
-								Trace.WriteLine(String.Format("Node[{0}]:attribut {1}, size: {2}",
+								System.Diagnostics.Debug.WriteLine(String.Format("Node[{0}]:attribut {1}, size: {2}",
 									reader.currentNodePos, ((itemattrib_t)attribute), datalen, reader.currentNodePos + nodeReader.BaseStream.Position));
 							}
 
@@ -542,7 +542,7 @@ namespace otitemeditor
 									{
 										if (outputDebug)
 										{
-											Trace.WriteLine(String.Format("Unexpected data length of server id block (Should be 2 bytes)"));
+											System.Diagnostics.Debug.WriteLine(String.Format("Unexpected data length of server id block (Should be 2 bytes)"));
 										}
 										return false;
 									}
