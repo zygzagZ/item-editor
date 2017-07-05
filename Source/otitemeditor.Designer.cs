@@ -90,6 +90,7 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.duplicateItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeLastItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showOnlyUnmatchedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateTreeviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -757,7 +758,8 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createItemToolStripMenuItem,
-            this.duplicateItemToolStripMenuItem});
+            this.duplicateItemToolStripMenuItem,
+            this.removeLastItemToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -778,6 +780,14 @@
             this.duplicateItemToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.duplicateItemToolStripMenuItem.Text = "&Duplicate item";
             this.duplicateItemToolStripMenuItem.Click += new System.EventHandler(this.duplicateItemToolStripMenuItem_Click);
+            // 
+            // removeLastItemToolStripMenuItem
+            // 
+            this.removeLastItemToolStripMenuItem.Enabled = true;
+            this.removeLastItemToolStripMenuItem.Name = "removeLastItemToolStripMenuItem";
+            this.removeLastItemToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.removeLastItemToolStripMenuItem.Text = "&Remove last item";
+            this.removeLastItemToolStripMenuItem.Click += new System.EventHandler(this.removeLastItemToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -1037,6 +1047,7 @@
 		private System.Windows.Forms.ToolStripMenuItem updateTraceToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem duplicateItemToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem removeLastItemToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem createItemToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem updateTreeviewToolStripMenuItem;
         private System.Windows.Forms.TextBox wareIdText;

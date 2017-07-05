@@ -169,37 +169,37 @@ namespace otitemeditor
 				{
 					case ItemType.Ground:
 						{
-							TreeNode node = groundNode.Nodes.Add(string.Format("Item {0}", item.id));
+							TreeNode node = groundNode.Nodes.Add(string.Format("{0}", item.id));
 							node.Tag = item;
 						} break;
 
 					case ItemType.Container:
 						{
-							TreeNode node = containerNode.Nodes.Add(string.Format("Item {0}", item.id));
+							TreeNode node = containerNode.Nodes.Add(string.Format("{0}", item.id));
 							node.Tag = item;
 						} break;
 
 					case ItemType.Fluid:
 						{
-							TreeNode node = fluidNode.Nodes.Add(string.Format("Item {0}", item.id));
+							TreeNode node = fluidNode.Nodes.Add(string.Format("{0}", item.id));
 							node.Tag = item;
 						} break;
 
 					case ItemType.Splash:
 						{
-							TreeNode node = splashNode.Nodes.Add(string.Format("Item {0}", item.id));
+							TreeNode node = splashNode.Nodes.Add(string.Format("{0}", item.id));
 							node.Tag = item;
 						} break;
 
 					case ItemType.Deprecated:
 						{
-							TreeNode node = deprecatedNode.Nodes.Add(string.Format("Item {0}", item.id));
+							TreeNode node = deprecatedNode.Nodes.Add(string.Format("{0}", item.id));
 							node.Tag = item;
 						} break;
 
 					default:
 						{
-							TreeNode node = otherNode.Nodes.Add(string.Format("Item {0}", item.id));
+							TreeNode node = otherNode.Nodes.Add(string.Format("{0}", item.id));
 							node.Tag = item;
 						} break;
 				}
@@ -429,6 +429,11 @@ namespace otitemeditor
 			return newId;
 		}
 
+		private void removeLastItem()
+		{
+			items.RemoveAt(items.Count - 1);
+		}
+
 		private void showSpriteCandidates(SpriteItem spriteItem)
 		{
 			tableLayoutPanelCandidates.Visible = true;
@@ -592,7 +597,7 @@ namespace otitemeditor
 					Application.DoEvents();
 				}
 				progress.progressLbl.Text = String.Format(
-					"Calculating image signature for item {0}", spriteItem.id);
+					"Calculating image signature for {0}", spriteItem.id);
 				++progress.bar.Value;
 			}
 
@@ -1066,6 +1071,11 @@ namespace otitemeditor
 				UInt16 newId = createItem(currentItem);
 				Trace.WriteLine(String.Format("Creating item id {0}", newId));
 			}
+		}
+
+		private void removeLastItemToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			removeLastItem();
 		}
 
 		private void createItemToolStripMenuItem_Click(object sender, EventArgs e)
