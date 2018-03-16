@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -277,7 +277,11 @@ namespace otitemeditor
 			}
 
 			SpriteItem spriteItem;
-			if (!currentPlugin.Instance.Items.TryGetValue(item.spriteId, out spriteItem))
+			ushort spriteId = item.spriteId;
+			if (spriteId == 0)
+				spriteId = 100;
+
+			if (!currentPlugin.Instance.Items.TryGetValue(spriteId, out spriteItem))
 			{
 				return false;
 			}
@@ -302,6 +306,9 @@ namespace otitemeditor
 			//Options
 			blockObjectCheck.DataBindings.Add("Checked", item, "blockObject");
 			blockObjectCheck.ForeColor = (item.blockObject == spriteItem.blockObject ? Color.Black : Color.Red);
+
+			blockGhostsCheck.DataBindings.Add("Checked", item, "blockGhosts");
+			blockGhostsCheck.ForeColor = Color.Black;
 
 			blockProjectileCheck.DataBindings.Add("Checked", item, "blockProjectile");
 			blockProjectileCheck.ForeColor = (item.blockProjectile == spriteItem.blockProjectile ? Color.Black : Color.Red);
@@ -333,8 +340,8 @@ namespace otitemeditor
 			verticalCheck.DataBindings.Add("Checked", item, "isVertical");
 			verticalCheck.ForeColor = (item.isVertical == spriteItem.isVertical ? Color.Black : Color.Red);
 
-            walkStackCheck.DataBindings.Add("Checked", item, "walkStack");
-            walkStackCheck.ForeColor = (item.walkStack == spriteItem.walkStack ? Color.Black : Color.Red);
+			walkStackCheck.DataBindings.Add("Checked", item, "walkStack");
+			walkStackCheck.ForeColor = (item.walkStack == spriteItem.walkStack ? Color.Black : Color.Red);
 
 			horizontalCheck.DataBindings.Add("Checked", item, "isHorizontal");
 			horizontalCheck.ForeColor = (item.isHorizontal == spriteItem.isHorizontal ? Color.Black : Color.Red);
@@ -369,11 +376,11 @@ namespace otitemeditor
 			minimapColorText.DataBindings.Add("Text", item, "minimapColor");
 			minimapColorText.ForeColor = (item.minimapColor == spriteItem.minimapColor ? Color.Black : Color.Red);
 
-            wareIdText.DataBindings.Add("Text", item, "wareId");
-            wareIdText.ForeColor = (item.wareId == spriteItem.wareId ? Color.Black : Color.Red);
+			wareIdText.DataBindings.Add("Text", item, "wareId");
+			wareIdText.ForeColor = (item.wareId == spriteItem.wareId ? Color.Black : Color.Red);
 
-            nameText.DataBindings.Add("Text", item, "name");
-            nameText.ForeColor = (item.name.CompareTo(spriteItem.name) == 0 ? Color.Black : Color.Red);
+			nameText.DataBindings.Add("Text", item, "name");
+			nameText.ForeColor = (item.name.CompareTo(spriteItem.name) == 0 ? Color.Black : Color.Red);
 
 			tableLayoutPanelCandidates.Visible = false;
 			for (int i = 0; i < tableLayoutPanelCandidates.ColumnCount; ++i)
@@ -495,81 +502,81 @@ namespace otitemeditor
 			}
 		}
 
-        public bool loadClient(Host.Types.Plugin plugin, UInt32 otbVersion)
-        {
-            SupportedClient client = plugin.Instance.SupportedClients.Find(
-                delegate(SupportedClient sc)
-                {
-                    return sc.otbVersion == otbVersion;
-                });
+		public bool loadClient(Host.Types.Plugin plugin, UInt32 otbVersion)
+		{
+			SupportedClient client = plugin.Instance.SupportedClients.Find(
+				delegate(SupportedClient sc)
+				{
+					return sc.otbVersion == otbVersion;
+				});
 
-            if (client == null)
-            {
-                MessageBox.Show("The selected plugin does not support this version.");
-                return false;
-            }
+			if (client == null)
+			{
+				MessageBox.Show("The selected plugin does not support this version.");
+				return false;
+			}
 
-            string dataFolder = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "data");
+			string dataFolder = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "data");
 
-            if (Directory.Exists(dataFolder) == false)
-            {
-                Directory.CreateDirectory(dataFolder);
-            }
+			if (Directory.Exists(dataFolder) == false)
+			{
+				Directory.CreateDirectory(dataFolder);
+			}
 
-            string datPath = FindClientFile(Path.Combine(dataFolder, client.version.ToString()), ".dat");
-            string sprPath = FindClientFile(Path.Combine(dataFolder, client.version.ToString()), ".spr");
+			string datPath = FindClientFile(Path.Combine(dataFolder, client.version.ToString()), ".dat");
+			string sprPath = FindClientFile(Path.Combine(dataFolder, client.version.ToString()), ".spr");
 
-            if (File.Exists(datPath) == false || File.Exists(sprPath) == false)
-            {
-                string text = String.Empty;
+			if (File.Exists(datPath) == false || File.Exists(sprPath) == false)
+			{
+				string text = String.Empty;
 
-                if (File.Exists(datPath) == false)
-                {
-                    text = String.Format("Unable to load dat file, please place a valid dat in 'data\\{0}\\'.", client.version);
-                }
+				if (File.Exists(datPath) == false)
+				{
+					text = String.Format("Unable to load dat file, please place a valid dat in 'data\\{0}\\'.", client.version);
+				}
 
-                if (File.Exists(sprPath) == false)
-                {
-                    if (text != String.Empty)
-                    {
-                        text += "\n";
-                    }
-                    text += String.Format("Unable to load spr file, please place a valid spr in 'data\\{0}\\'.", client.version);
-                }
+				if (File.Exists(sprPath) == false)
+				{
+					if (text != String.Empty)
+					{
+						text += "\n";
+					}
+					text += String.Format("Unable to load spr file, please place a valid spr in 'data\\{0}\\'.", client.version);
+				}
 
-                MessageBox.Show(text);
-                return false;
-            }
+				MessageBox.Show(text);
+				return false;
+			}
 
-            bool result = plugin.Instance.LoadClient(client, datPath, sprPath);
-            if (!result)
-            {
-                MessageBox.Show(String.Format("The plugin could not load dat or spr."));
-            }
+			bool result = plugin.Instance.LoadClient(client, datPath, sprPath);
+			if (!result)
+			{
+				MessageBox.Show(String.Format("The plugin could not load dat or spr."));
+			}
 
-            items.clientVersion = client.version;
-            return result;
-        }
+			items.clientVersion = client.version;
+			return result;
+		}
 
-        private string FindClientFile(string Path, string extension)
-        {
-            try
-            {
-                foreach (string fileOn in Directory.GetFiles(Path))
-                {
-                    FileInfo file = new FileInfo(fileOn);
-                    if (file.Extension.Equals(extension))
-                    {
-                        return file.FullName;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                return String.Empty;
-            }
-            return String.Empty;
-        }
+		private string FindClientFile(string Path, string extension)
+		{
+			try
+			{
+				foreach (string fileOn in Directory.GetFiles(Path))
+				{
+					FileInfo file = new FileInfo(fileOn);
+					if (file.Extension.Equals(extension))
+					{
+						return file.FullName;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				return String.Empty;
+			}
+			return String.Empty;
+		}
 
 		private bool generateSpriteSignatures(ref SpriteItems items)
 		{
@@ -1054,6 +1061,67 @@ namespace otitemeditor
 			}
 		}
 
+		private void updateItem(object sender, EventArgs e)
+		{
+			if (currentItem != null)
+			{
+				Control c = (Control) sender;
+				var d = new Dictionary<Control, string>();
+				d[typeCombo] = "type";
+				d[blockObjectCheck] = "blockObject";
+				d[blockProjectileCheck] = "blockProjectile";
+				d[blockPathFindCheck] = "blockPathFind";
+				d[moveableCheck] = "isMoveable";
+				d[hasHeightCheck] = "hasHeight";
+				d[pickupableCheck] = "isPickupable";
+				d[hangableCheck] = "isHangable";
+				d[useableCheck] = "hasUseWith";
+				d[rotatableCheck] = "isRotatable";
+				d[stackableCheck] = "isStackable";
+				d[verticalCheck] = "isVertical";
+				d[walkStackCheck] = "walkStack";
+				d[horizontalCheck] = "isHorizontal";
+				d[alwaysOnTopCheck] = "alwaysOnTop";
+				d[readableCheck] = "isReadable";
+				d[speedText] = "groundSpeed";
+				d[topOrderText] = "alwaysOnTopOrder";
+				d[lightLevelText] = "lightLevel";
+				d[lightColorText] = "lightColor";
+				d[maxReadCharsText] = "maxReadChars";
+				d[maxReadWriteCharsText] = "maxReadWriteChars";
+				d[lookThroughCheck] = "lookThrough";
+				d[minimapColorText] = "minimapColor";
+				d[wareIdText] = "wareId";
+				d[nameText] = "name";
+
+				SpriteItem spriteItem;
+				ushort spriteId = currentItem.spriteId;
+				if (spriteId == 0)
+					spriteId = 100;
+
+				if (!currentPlugin.Instance.Items.TryGetValue(spriteId, out spriteItem))
+				{
+					return;
+				}
+				if (!currentItem.isCustomCreated && currentItem.spriteHash != null && spriteItem.spriteHash != null)
+				{
+					pictureBox.BackColor = ((Utils.ByteArrayCompare(currentItem.spriteHash, spriteItem.spriteHash) ? Color.White : Color.Red));
+				}
+				if (c is CheckBox) {
+					c.ForeColor = (((CheckBox)c).Checked == (bool)spriteItem.GetType().GetProperty(d[c]).GetValue(spriteItem, null) ? Color.Black : Color.Red);
+				}
+				speedText.ForeColor = (currentItem.groundSpeed == spriteItem.groundSpeed ? Color.Black : Color.Red);
+				topOrderText.ForeColor = (currentItem.alwaysOnTopOrder == spriteItem.alwaysOnTopOrder ? Color.Black : Color.Red);
+				lightLevelText.ForeColor = (currentItem.lightLevel == spriteItem.lightLevel ? Color.Black : Color.Red);
+				lightColorText.ForeColor = (currentItem.lightColor == spriteItem.lightColor ? Color.Black : Color.Red);
+				maxReadCharsText.ForeColor = (currentItem.maxReadChars == spriteItem.maxReadChars ? Color.Black : Color.Red);
+				maxReadWriteCharsText.ForeColor = (currentItem.maxReadWriteChars == spriteItem.maxReadWriteChars ? Color.Black : Color.Red);
+				minimapColorText.ForeColor = (currentItem.minimapColor == spriteItem.minimapColor ? Color.Black : Color.Red);
+				wareIdText.ForeColor = (currentItem.wareId == spriteItem.wareId ? Color.Black : Color.Red);
+				nameText.ForeColor = (currentItem.name.CompareTo(spriteItem.name) == 0 ? Color.Black : Color.Red);
+			}
+		}
+
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			MessageBox.Show("Information how to use this program check http://www.otfans.net.",
@@ -1062,6 +1130,47 @@ namespace otitemeditor
 				MessageBoxIcon.None,
 				MessageBoxDefaultButton.Button1,
 				0);
+		}
+
+		private void copySpriteButton_Click(object sender, EventArgs e)
+		{
+			if (currentItem != null) {
+				SpriteItem spriteItem;
+				ushort spriteId = currentItem.spriteId;
+				if (spriteId == 0)
+					spriteId = 100;
+
+				if (!currentPlugin.Instance.Items.TryGetValue(spriteId, out spriteItem))
+				{
+					return;
+				}
+				currentItem.blockObject = spriteItem.blockObject;
+				currentItem.blockProjectile = spriteItem.blockProjectile;
+				currentItem.blockPathFind = spriteItem.blockPathFind;
+				currentItem.isMoveable = spriteItem.isMoveable;
+				currentItem.hasHeight = spriteItem.hasHeight;
+				currentItem.isPickupable = spriteItem.isPickupable;
+				currentItem.isHangable = spriteItem.isHangable;
+				currentItem.hasUseWith = spriteItem.hasUseWith;
+				currentItem.isRotatable = spriteItem.isRotatable;
+				currentItem.isStackable = spriteItem.isStackable;
+				currentItem.isVertical = spriteItem.isVertical;
+				currentItem.walkStack = spriteItem.walkStack;
+				currentItem.isHorizontal = spriteItem.isHorizontal;
+				currentItem.alwaysOnTop = spriteItem.alwaysOnTop;
+				currentItem.isReadable = spriteItem.isReadable;
+				currentItem.groundSpeed = spriteItem.groundSpeed;
+				currentItem.alwaysOnTopOrder = spriteItem.alwaysOnTopOrder;
+				currentItem.lightLevel = spriteItem.lightLevel;
+				currentItem.lightColor = spriteItem.lightColor;
+				currentItem.maxReadChars = spriteItem.maxReadChars;
+				currentItem.maxReadWriteChars = spriteItem.maxReadWriteChars;
+				currentItem.lookThrough = spriteItem.lookThrough;
+				currentItem.minimapColor = spriteItem.minimapColor;
+				currentItem.wareId = spriteItem.wareId;
+				currentItem.name = spriteItem.name;
+				showItem(currentItem);
+			}
 		}
 
 		private void duplicateItemToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1089,12 +1198,15 @@ namespace otitemeditor
 			if (currentItem != null)
 			{
 				currentItem.type = (ItemType)Enum.Parse(typeof(ItemType), typeCombo.SelectedValue.ToString());
+				Trace.WriteLine(String.Format("Item {0} type = {1}", currentItem.id, typeCombo.SelectedValue.ToString()));
+			} else {
+				Trace.WriteLine("currentItem == null");
 			}
 		}
 
 		private void updateTreeviewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			buildTreeView();
-        }
+		}
 	}
 }

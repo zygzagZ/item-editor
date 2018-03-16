@@ -73,11 +73,12 @@ namespace Tibia850
 				using (BinaryReader reader = new BinaryReader(fileStream))
 				{
 					UInt32 datSignature = reader.ReadUInt32();
-					if (signature != 0 && datSignature != signature)
-					{
-						Console.WriteLine("dat Signature mismatch");
-						return false;
-					}
+					// if (signature != 0 && datSignature != signature)
+					// {
+					// 	Console.WriteLine("dat Signature mismatch");
+					// 	Trace.WriteLine("dat Signature mismatch");
+					// 	return false;
+					// }
 
 					//get max id
 					UInt16 itemCount = reader.ReadUInt16();
@@ -85,7 +86,7 @@ namespace Tibia850
 					UInt16 effectCount = reader.ReadUInt16();
 					UInt16 distanceCount = reader.ReadUInt16();
 
-					Console.WriteLine("DAT: items: {0}, creatures: {1}, effects: {2}, distances: {3}", itemCount, creatureCount, effectCount, distanceCount);
+					Trace.WriteLine(String.Format("DAT: items: {0}, creatures: {1}, effects: {2}, distances: {3}", itemCount, creatureCount, effectCount, distanceCount));
 
 					UInt16 minclientID = 100; //items starts at 100
 					UInt16 maxclientID = itemCount;

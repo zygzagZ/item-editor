@@ -46,6 +46,7 @@ namespace otitemeditor
 		public bool isVertical;
 		public bool isRotatable;
 		public bool blockObject;
+		public bool blockGhosts;
 		public bool blockProjectile;
 		public bool blockPathFind;
 		public bool allowDistRead;
@@ -110,6 +111,11 @@ namespace otitemeditor
 			}
 
 			if (blockObject != item.blockObject)
+			{
+				return false;
+			}
+
+			if (blockGhosts != item.blockGhosts)
 			{
 				return false;
 			}
@@ -234,6 +240,7 @@ namespace otitemeditor
 		public bool isVertical { get { return itemImpl.isVertical; } set { itemImpl.isVertical = value; } }
 		public bool isRotatable { get { return itemImpl.isRotatable; } set { itemImpl.isRotatable = value; } }
 		public bool blockObject { get { return itemImpl.blockObject; } set { itemImpl.blockObject = value; } }
+		public bool blockGhosts { get { return itemImpl.blockGhosts; } set { itemImpl.blockGhosts = value; } }
 		public bool blockProjectile { get { return itemImpl.blockProjectile; } set { itemImpl.blockProjectile = value; } }
 		public bool blockPathFind { get { return itemImpl.blockPathFind; } set { itemImpl.blockPathFind = value; } }
 		public bool allowDistRead { get { return itemImpl.allowDistRead; } set { itemImpl.allowDistRead = value; } }

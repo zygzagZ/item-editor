@@ -414,7 +414,7 @@ namespace otitemeditor
 			FLAG_PICKUPABLE = 32,
 			FLAG_MOVEABLE = 64,
 			FLAG_STACKABLE = 128,
-			FLAG_FLOORCHANGEDOWN = 256,
+			FLAG_BLOCK_GHOSTS = 256,
 			FLAG_FLOORCHANGENORTH = 512,
 			FLAG_FLOORCHANGEEAST = 1024,
 			FLAG_FLOORCHANGESOUTH = 2048,
@@ -505,6 +505,7 @@ namespace otitemeditor
 						}
 
 						item.blockObject = ((flags & itemflags_t.FLAG_BLOCK_SOLID) == itemflags_t.FLAG_BLOCK_SOLID);
+						item.blockGhosts = ((flags & itemflags_t.FLAG_BLOCK_GHOSTS) == itemflags_t.FLAG_BLOCK_GHOSTS);
 						item.blockProjectile = ((flags & itemflags_t.FLAG_BLOCK_PROJECTILE) == itemflags_t.FLAG_BLOCK_PROJECTILE);
 						item.blockPathFind = ((flags & itemflags_t.FLAG_BLOCK_PATHFIND) == itemflags_t.FLAG_BLOCK_PATHFIND);
 						item.isPickupable = ((flags & itemflags_t.FLAG_PICKUPABLE) == itemflags_t.FLAG_PICKUPABLE);
@@ -831,6 +832,9 @@ namespace otitemeditor
 						UInt32 flags = 0;
 						if (item.blockObject)
 							flags |= (UInt32)itemflags_t.FLAG_BLOCK_SOLID;
+
+						if (item.blockGhosts)
+							flags |= (UInt32)itemflags_t.FLAG_BLOCK_GHOSTS;
 
 						if (item.blockProjectile)
 							flags |= (UInt32)itemflags_t.FLAG_BLOCK_PROJECTILE;

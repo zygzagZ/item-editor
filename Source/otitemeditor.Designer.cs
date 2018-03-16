@@ -1,4 +1,6 @@
-﻿namespace otitemeditor
+﻿using System.Windows.Forms;
+
+namespace otitemeditor
 {
 	partial class otitemeditor
 	{
@@ -52,6 +54,7 @@
             this.maxReadCharsLabel = new System.Windows.Forms.Label();
             this.maxReadCharsText = new System.Windows.Forms.TextBox();
             this.minimapColorLbl = new System.Windows.Forms.Label();
+            this.copySpriteButton = new System.Windows.Forms.Button();
             this.minimapColorText = new System.Windows.Forms.TextBox();
             this.lightColorLbl = new System.Windows.Forms.Label();
             this.lightColorText = new System.Windows.Forms.TextBox();
@@ -77,6 +80,7 @@
             this.pickupableCheck = new System.Windows.Forms.CheckBox();
             this.blockProjectileCheck = new System.Windows.Forms.CheckBox();
             this.blockObjectCheck = new System.Windows.Forms.CheckBox();
+            this.blockGhostsCheck = new System.Windows.Forms.CheckBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.menuBar = new System.Windows.Forms.MenuStrip();
@@ -386,12 +390,29 @@
             this.optionGroupBox.Controls.Add(this.pickupableCheck);
             this.optionGroupBox.Controls.Add(this.blockProjectileCheck);
             this.optionGroupBox.Controls.Add(this.blockObjectCheck);
+            this.optionGroupBox.Controls.Add(this.blockGhostsCheck);
+            this.optionGroupBox.Controls.Add(this.copySpriteButton);
             this.optionGroupBox.Location = new System.Drawing.Point(8, 134);
             this.optionGroupBox.Name = "optionGroupBox";
             this.optionGroupBox.Size = new System.Drawing.Size(434, 251);
             this.optionGroupBox.TabIndex = 1;
             this.optionGroupBox.TabStop = false;
             this.optionGroupBox.Text = "Options";
+
+			foreach (Control control in this.optionGroupBox.Controls)
+			{
+				if (control is CheckBox)
+				{
+					((CheckBox)control).CheckedChanged += new System.EventHandler(this.updateItem);
+				}
+				else if (control is TextBox)
+				{
+					control.TextChanged += new System.EventHandler(this.updateItem);
+				}
+				control.Leave += new System.EventHandler(this.updateItem);
+				control.Click += new System.EventHandler(this.updateItem);
+			}
+
             // 
             // maxReadWriteChars
             // 
@@ -664,6 +685,26 @@
             this.blockObjectCheck.TabIndex = 4;
             this.blockObjectCheck.Text = "Block object";
             this.blockObjectCheck.UseVisualStyleBackColor = true;
+            // 
+            // blockGhostsCheck
+            // 
+            this.blockGhostsCheck.AutoSize = true;
+            this.blockGhostsCheck.Location = new System.Drawing.Point(323, 42);
+            this.blockGhostsCheck.Name = "blockGhostsCheck";
+            this.blockGhostsCheck.Size = new System.Drawing.Size(76, 17);
+            this.blockGhostsCheck.TabIndex = 14;
+            this.blockGhostsCheck.Text = "block ghosts";
+            this.blockGhostsCheck.UseVisualStyleBackColor = true;
+            // 
+            // copySpriteButton
+            // 
+            this.copySpriteButton.AutoSize = true;
+            this.copySpriteButton.Location = new System.Drawing.Point(3, 224);
+            this.copySpriteButton.Name = "copySpriteButton";
+            this.copySpriteButton.Size = new System.Drawing.Size(80, 13);
+            this.copySpriteButton.TabIndex = 40;
+            this.copySpriteButton.Text = "DAT Copy";
+            this.copySpriteButton.Click += new System.EventHandler(this.copySpriteButton_Click);
             // 
             // pictureBox
             // 
@@ -1011,6 +1052,7 @@
 		private System.Windows.Forms.CheckBox pickupableCheck;
 		private System.Windows.Forms.CheckBox blockProjectileCheck;
 		private System.Windows.Forms.CheckBox blockObjectCheck;
+		private System.Windows.Forms.CheckBox blockGhostsCheck;
 		private System.Windows.Forms.CheckBox alwaysOnTopCheck;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
 		private System.Windows.Forms.ToolStripMenuItem compareOtbToolStripMenuItem;
@@ -1054,6 +1096,7 @@
         private System.Windows.Forms.Label wareIdLbl;
         private System.Windows.Forms.TextBox nameText;
         private System.Windows.Forms.Label nameLbl;
+		private System.Windows.Forms.Button copySpriteButton;
 	}
 }
 

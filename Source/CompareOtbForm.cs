@@ -85,6 +85,11 @@ namespace otitemeditor
 						resultTextBox.AppendText(string.Format("id: {0} blockObject [{1}]/[{2}]" + Environment.NewLine, item1.id, item1.blockObject, item2.blockObject));
 					}
 
+					if (item1.blockGhosts != item2.blockGhosts)
+					{
+						resultTextBox.AppendText(string.Format("id: {0} blockGhosts [{1}]/[{2}]" + Environment.NewLine, item1.id, item1.blockGhosts, item2.blockGhosts));
+					}
+
 					if (item1.blockPathFind != item2.blockPathFind)
 					{
 						resultTextBox.AppendText(string.Format("id: {0} blockPathFind [{1}]/[{2}]" + Environment.NewLine, item1.id, item1.blockPathFind, item2.blockPathFind));
