@@ -169,11 +169,11 @@ namespace ImageSimilarity
 		public static Bitmap getBitmap(byte[] rgbData, PixelFormat pixelFormat, int Width, int Height)
 		{
 			int bitPerPixel = Image.GetPixelFormatSize(pixelFormat);
-			Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
+			Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
 			BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
 				ImageLockMode.ReadWrite, bmp.PixelFormat);
 
-			if (pixelFormat == PixelFormat.Format24bppRgb)
+			if (pixelFormat == PixelFormat.Format32bppArgb)
 			{
 				//reverse rgb
 				for (int y = 0; y < Height; ++y)

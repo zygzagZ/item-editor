@@ -68,7 +68,7 @@ namespace otitemeditor
 				Height = 64;
 			}
 
-			Bitmap canvas = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
+			Bitmap canvas = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
 			Graphics g = Graphics.FromImage(canvas);
 
 			//draw sprite
@@ -79,7 +79,7 @@ namespace otitemeditor
 					for (int cx = 0; cx < spriteItem.width; ++cx)
 					{
 						int frameIndex = cx + cy * spriteItem.width + frame * spriteItem.width * spriteItem.height;
-						Bitmap bmp = ImageUtils.getBitmap(spriteItem.getRGBData(frameIndex), PixelFormat.Format24bppRgb, 32, 32);
+						Bitmap bmp = ImageUtils.getBitmap(spriteItem.getRGBData(frameIndex), PixelFormat.Format32bppArgb, 32, 32);
 
 						if (canvas.Width == 32)
 						{
@@ -109,7 +109,7 @@ namespace otitemeditor
 					for (int cx = 0; cx < spriteItem.width; ++cx)
 					{
 						int frameIndex = cx + cy * spriteItem.width + frame * spriteItem.width * spriteItem.height;
-						Bitmap bmp = ImageUtils.getBitmap(spriteItem.getRGBData(frameIndex), PixelFormat.Format24bppRgb, 32, 32);
+						Bitmap bmp = ImageUtils.getBitmap(spriteItem.getRGBData(frameIndex), PixelFormat.Format32bppArgb, 32, 32);
 
 						if (canvas.Width == 32)
 						{
@@ -128,7 +128,7 @@ namespace otitemeditor
 
 		private void drawSprite(PictureBox picturBox, SpriteItem spriteItem)
 		{
-			Bitmap canvas = new Bitmap(64, 64, PixelFormat.Format24bppRgb);
+			Bitmap canvas = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
 			using (Graphics g = Graphics.FromImage(canvas))
 			{
 				g.FillRectangle(new SolidBrush(Color.FromArgb(0x11, 0x11, 0x11)), 0, 0, canvas.Width, canvas.Height);
@@ -137,7 +137,7 @@ namespace otitemeditor
 
 			drawSprite(ref canvas, spriteItem);
 
-			Bitmap newImage = new Bitmap(64, 64, PixelFormat.Format24bppRgb);
+			Bitmap newImage = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
 			using (Graphics g = Graphics.FromImage(newImage))
 			{
 				g.DrawImage(canvas, new Point((canvas.Width > 32 ? 0 : 32), (canvas.Height > 32 ? 0 : 32)));

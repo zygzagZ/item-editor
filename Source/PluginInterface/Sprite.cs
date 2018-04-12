@@ -159,7 +159,7 @@ namespace otitemeditor
 
 		public byte[] getRGBData(byte transparentColor)
 		{
-			byte[] rgb32x32x3 = new byte[32 * 32 * 3];
+			byte[] rgb32x32x3 = new byte[32 * 32 * 4];
 			UInt32 bytes = 0;
 			UInt32 x = 0;
 			UInt32 y = 0;
@@ -173,9 +173,10 @@ namespace otitemeditor
 				for (int i = 0; i < chunkSize; ++i)
 				{
 					// Transparent pixel
-					rgb32x32x3[96 * y + x * 3 + 0] = transparentColor;
-					rgb32x32x3[96 * y + x * 3 + 1] = transparentColor;
-					rgb32x32x3[96 * y + x * 3 + 2] = transparentColor;
+					rgb32x32x3[128 * y + x * 4 + 0] = transparentColor;
+					rgb32x32x3[128 * y + x * 4 + 1] = transparentColor;
+					rgb32x32x3[128 * y + x * 4 + 2] = transparentColor;
+					rgb32x32x3[128 * y + x * 4 + 3] = transparentColor;
 					x++;
 					if (x >= 32)
 					{
@@ -193,11 +194,13 @@ namespace otitemeditor
 					byte red = dump[bytes + 0];
 					byte green = dump[bytes + 1];
 					byte blue = dump[bytes + 2];
-					rgb32x32x3[96 * y + x * 3 + 0] = red;
-					rgb32x32x3[96 * y + x * 3 + 1] = green;
-					rgb32x32x3[96 * y + x * 3 + 2] = blue;
+					byte alpha = dump[bytes + 3];
+					rgb32x32x3[128 * y + x * 4 + 0] = red;
+					rgb32x32x3[128 * y + x * 4 + 1] = green;
+					rgb32x32x3[128 * y + x * 4 + 2] = blue;
+					rgb32x32x3[128 * y + x * 4 + 4] = alpha;
 
-					bytes += 3;
+					bytes += 4;
 
 					x++;
 					if (x >= 32)
@@ -211,9 +214,10 @@ namespace otitemeditor
 			// Fill up any trailing pixels
 			while (y < 32 && x < 32)
 			{
-				rgb32x32x3[96 * y + x * 3 + 0] = transparentColor;
-				rgb32x32x3[96 * y + x * 3 + 1] = transparentColor;
-				rgb32x32x3[96 * y + x * 3 + 2] = transparentColor;
+				rgb32x32x3[128 * y + x * 4 + 0] = transparentColor;
+				rgb32x32x3[128 * y + x * 4 + 1] = transparentColor;
+				rgb32x32x3[128 * y + x * 4 + 2] = transparentColor;
+				rgb32x32x3[128 * y + x * 4 + 3] = transparentColor;
 				x++;
 				if (x >= 32)
 				{
@@ -227,7 +231,8 @@ namespace otitemeditor
 
 		public byte[] getRGBAData()
 		{
-			byte[] rgb32x32x3 = getRGBData();
+			return getRGBData();
+			/*byte[] rgb32x32x3 = getRGBData();
 			byte[] rgbx32x32x4 = new byte[32 * 32 * 4];
 
 			//reverse rgb
@@ -242,7 +247,7 @@ namespace otitemeditor
 				}
 			}
 
-			return rgbx32x32x4;
+			return rgbx32x32x4;*/
 		}
 	}
 }
