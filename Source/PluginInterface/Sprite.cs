@@ -198,7 +198,7 @@ namespace otitemeditor
 					rgb32x32x3[128 * y + x * 4 + 0] = red;
 					rgb32x32x3[128 * y + x * 4 + 1] = green;
 					rgb32x32x3[128 * y + x * 4 + 2] = blue;
-					rgb32x32x3[128 * y + x * 4 + 4] = alpha;
+					rgb32x32x3[128 * y + x * 4 + 3] = alpha;
 
 					bytes += 4;
 
