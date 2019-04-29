@@ -1134,6 +1134,25 @@ namespace otitemeditor
 
 		private void copySpriteButton_Click(object sender, EventArgs e)
 		{
+
+			/*foreach (OtbItem item in items) {
+				SpriteItem spriteItem;
+				ushort spriteId = item.spriteId;
+				if (spriteId == 0)
+					spriteId = 100;
+
+				if (!currentPlugin.Instance.Items.TryGetValue(spriteId, out spriteItem))
+				{
+					continue;
+				}
+				if (item.alwaysOnTopOrder != spriteItem.alwaysOnTopOrder || item.alwaysOnTop != spriteItem.alwaysOnTop) {
+					Trace.WriteLine(String.Format("Updating {0}", item.id));
+				}
+				item.alwaysOnTopOrder = spriteItem.alwaysOnTopOrder;
+				item.alwaysOnTop = spriteItem.alwaysOnTop;
+			}
+
+			return;*/
 			if (currentItem != null) {
 				SpriteItem spriteItem;
 				ushort spriteId = currentItem.spriteId;
@@ -1169,6 +1188,7 @@ namespace otitemeditor
 				currentItem.minimapColor = spriteItem.minimapColor;
 				currentItem.wareId = spriteItem.wareId;
 				currentItem.name = spriteItem.name;
+				currentItem.type = spriteItem.type;
 				showItem(currentItem);
 			}
 		}
